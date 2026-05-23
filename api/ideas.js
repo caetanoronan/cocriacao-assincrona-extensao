@@ -19,8 +19,9 @@ function setCorsHeaders(req, res) {
     "http://127.0.0.1:5500"
   ];
   const origin = req.headers.origin;
+  const isProjectVercelDomain = /^https:\/\/cocriacao-assincrona-extensao.*\.vercel\.app$/.test(origin || "");
 
-  if (allowedOrigins.includes(origin)) {
+  if (allowedOrigins.includes(origin) || isProjectVercelDomain) {
     res.setHeader("Access-Control-Allow-Origin", origin);
   }
 
