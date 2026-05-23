@@ -1,0 +1,914 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Etapa 1 | Co-criacao Assincrona</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f5faf8;
+        --surface: #ffffff;
+        --surface-soft: #e9f4f1;
+        --text: #102522;
+        --muted: #55706b;
+        --line: #c9ddd8;
+        --accent: #0b7f73;
+        --accent-strong: #07564e;
+        --blue: #246b9f;
+        --green: #31835b;
+        --amber: #a96816;
+        --rose: #a53c60;
+        --shadow: 0 20px 50px rgba(20, 56, 50, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--text);
+        background:
+          linear-gradient(145deg, rgba(11, 127, 115, 0.12), transparent 35%),
+          linear-gradient(225deg, rgba(36, 107, 159, 0.12), transparent 38%),
+          var(--bg);
+      }
+
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .shell {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 28px 0 44px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+        gap: 18px;
+        align-items: stretch;
+        margin-bottom: 18px;
+      }
+
+      .panel,
+      .hero-main,
+      .hero-side,
+      .tab-panel,
+      .idea-card,
+      .column,
+      .field-group {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: var(--shadow);
+      }
+
+      .hero-main,
+      .hero-side,
+      .panel,
+      .tab-panel {
+        padding: 24px;
+      }
+
+      .eyebrow {
+        margin: 0 0 10px;
+        color: var(--accent);
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 14ch;
+        margin-bottom: 18px;
+        font-size: clamp(2.8rem, 7vw, 5.8rem);
+        line-height: 0.94;
+        letter-spacing: 0;
+      }
+
+      h2 {
+        margin-bottom: 12px;
+        font-size: clamp(1.8rem, 4vw, 3.2rem);
+        line-height: 1;
+        letter-spacing: 0;
+      }
+
+      h3 {
+        margin-bottom: 10px;
+        font-size: 1.08rem;
+      }
+
+      .lede {
+        max-width: 68ch;
+        color: var(--muted);
+        font-size: 1.04rem;
+        line-height: 1.7;
+      }
+
+      .hero-side {
+        display: grid;
+        gap: 12px;
+      }
+
+      .metric {
+        display: grid;
+        gap: 4px;
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface-soft);
+      }
+
+      .metric span {
+        color: var(--muted);
+        font-size: 0.8rem;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .metric strong {
+        font-size: 2rem;
+        line-height: 1;
+      }
+
+      .tabs {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        margin: 0 0 14px;
+        padding-bottom: 4px;
+      }
+
+      .tab {
+        flex: 0 0 auto;
+        min-height: 42px;
+        padding: 0 14px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        color: var(--accent-strong);
+        background: var(--surface);
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .tab[aria-selected="true"] {
+        color: #ffffff;
+        border-color: var(--accent);
+        background: var(--accent);
+      }
+
+      .tab-panel {
+        display: none;
+      }
+
+      .tab-panel.active {
+        display: block;
+      }
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .process-card {
+        min-height: 170px;
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface-soft);
+      }
+
+      .process-card p,
+      .tab-panel li,
+      .column p,
+      .idea-card p {
+        color: var(--muted);
+        line-height: 1.58;
+      }
+
+      .tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 0 10px;
+        border-radius: 999px;
+        color: var(--accent-strong);
+        background: #dff0ed;
+        font-size: 0.82rem;
+        font-weight: 800;
+      }
+
+      .mural-layout {
+        display: grid;
+        grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+        gap: 14px;
+      }
+
+      .field-group {
+        display: grid;
+        gap: 12px;
+        align-content: start;
+        padding: 18px;
+        box-shadow: none;
+      }
+
+      label {
+        display: grid;
+        gap: 6px;
+        color: var(--accent-strong);
+        font-size: 0.9rem;
+        font-weight: 800;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        color: var(--text);
+        background: #fbfefd;
+      }
+
+      input,
+      select {
+        min-height: 40px;
+        padding: 0 10px;
+      }
+
+      textarea {
+        min-height: 110px;
+        resize: vertical;
+        padding: 10px;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: 0 12px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        color: var(--accent-strong);
+        background: var(--surface);
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .button.primary {
+        color: #ffffff;
+        border-color: var(--accent);
+        background: var(--accent);
+      }
+
+      .button.danger {
+        color: #8f233a;
+        border-color: #e7b8c3;
+        background: #fff0f3;
+      }
+
+      .board {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(220px, 1fr));
+        gap: 12px;
+        overflow-x: auto;
+      }
+
+      .column {
+        min-height: 420px;
+        padding: 12px;
+        box-shadow: none;
+      }
+
+      .column h3 {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 12px;
+        color: var(--accent-strong);
+      }
+
+      .count {
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      .idea-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .idea-card {
+        display: grid;
+        gap: 8px;
+        padding: 12px;
+        box-shadow: none;
+      }
+
+      .idea-card strong {
+        line-height: 1.25;
+      }
+
+      .idea-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 24px;
+        padding: 0 8px;
+        border-radius: 999px;
+        background: var(--surface-soft);
+        color: var(--muted);
+        font-size: 0.76rem;
+        font-weight: 800;
+      }
+
+      .empty {
+        margin: 0;
+        padding: 12px;
+        border: 1px dashed var(--line);
+        border-radius: 8px;
+        color: var(--muted);
+      }
+
+      .note {
+        margin-top: 14px;
+        padding: 14px;
+        border-left: 4px solid var(--accent);
+        background: var(--surface-soft);
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .option-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .option {
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface-soft);
+      }
+
+      .option strong {
+        color: var(--accent-strong);
+      }
+
+      .notion-grid {
+        display: grid;
+        grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.2fr);
+        gap: 14px;
+      }
+
+      .notion-card {
+        display: grid;
+        gap: 12px;
+        align-content: start;
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface-soft);
+      }
+
+      .notion-card p {
+        margin-bottom: 0;
+        color: var(--muted);
+        line-height: 1.58;
+      }
+
+      .notion-link-box {
+        display: grid;
+        gap: 10px;
+        padding: 14px;
+        border: 1px dashed var(--line);
+        border-radius: 8px;
+        background: #fbfefd;
+      }
+
+      .checklist {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .checklist li {
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fbfefd;
+      }
+
+      @media (max-width: 920px) {
+        .hero,
+        .content-grid,
+        .mural-layout,
+        .notion-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .board {
+          grid-template-columns: repeat(3, minmax(260px, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
+        .shell {
+          width: min(100% - 20px, 1180px);
+          padding-top: 12px;
+        }
+
+        .hero-main,
+        .hero-side,
+        .panel,
+        .tab-panel {
+          padding: 18px;
+        }
+
+        h1 {
+          font-size: clamp(2.65rem, 15vw, 4.2rem);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <header class="hero">
+        <div class="hero-main">
+          <p class="eyebrow">Etapa 1</p>
+          <h1>Co-cria&ccedil;&atilde;o ass&iacute;ncrona e descentralizada.</h1>
+          <p class="lede">
+            Ambiente inicial para organizar ideias, refer&ecirc;ncias, recursos j&aacute;
+            existentes e primeiras a&ccedil;&otilde;es do projeto de extens&atilde;o em
+            ci&ecirc;ncia cidad&atilde;, literacia oce&acirc;nica e monitoramento colaborativo
+            da costa catarinense.
+          </p>
+          <div class="tag-row" aria-label="Palavras-chave da etapa">
+            <span class="tag">mural permanente</span>
+            <span class="tag">ciclos leves</span>
+            <span class="tag">ideias adotadas</span>
+            <span class="tag">sintese coletiva</span>
+          </div>
+        </div>
+
+        <aside class="hero-side" aria-label="Resumo operacional">
+          <div class="metric">
+            <span>Equipe inicial</span>
+            <strong>9</strong>
+          </div>
+          <div class="metric">
+            <span>Ritmo sugerido</span>
+            <strong>2 semanas</strong>
+          </div>
+          <div class="metric">
+            <span>Formato</span>
+            <strong>ass&iacute;ncrono</strong>
+          </div>
+        </aside>
+      </header>
+
+      <main class="panel">
+        <nav class="tabs" aria-label="Abas da etapa">
+          <button class="tab" type="button" aria-selected="true" data-tab="visao">Vis&atilde;o geral</button>
+          <button class="tab" type="button" aria-selected="false" data-tab="mural">Mural de ideias</button>
+          <button class="tab" type="button" aria-selected="false" data-tab="rotina">Rotina ass&iacute;ncrona</button>
+          <button class="tab" type="button" aria-selected="false" data-tab="comunicacao">Comunica&ccedil;&atilde;o</button>
+          <button class="tab" type="button" aria-selected="false" data-tab="notion">Notion</button>
+          <button class="tab" type="button" aria-selected="false" data-tab="online">Mural online</button>
+        </nav>
+
+        <section class="tab-panel active" id="visao">
+          <p class="eyebrow">Finalidade</p>
+          <h2>Antes dos produtos, uma intelig&ecirc;ncia coletiva organizada.</h2>
+          <p class="lede">
+            Esta primeira etapa prepara o terreno para que a equipe crie junto,
+            reconhe&ccedil;a o que j&aacute; existe e transforme ideias soltas em frentes
+            pr&aacute;ticas de extens&atilde;o, sem depender de reuni&otilde;es remotas obrigat&oacute;rias.
+          </p>
+
+          <div class="content-grid">
+            <article class="process-card">
+              <h3>Objetivo da etapa</h3>
+              <p>
+                Implantar uma metodologia interna de co-cria&ccedil;&atilde;o para que os
+                membros registrem ideias, comentem propostas e adotem iniciativas
+                conforme disponibilidade e afinidade.
+              </p>
+            </article>
+            <article class="process-card">
+              <h3>Produtos esperados</h3>
+              <p>
+                Mural digital, invent&aacute;rio do que j&aacute; existe, banco de ideias,
+                lista de propostas adotadas e primeiro mapa de prioridades.
+              </p>
+            </article>
+            <article class="process-card">
+              <h3>Princ&iacute;pio de participa&ccedil;&atilde;o</h3>
+              <p>
+                Ideias iniciais podem ser incompletas. O valor da etapa est&aacute;
+                em registrar, conectar, amadurecer e decidir com calma.
+              </p>
+            </article>
+            <article class="process-card">
+              <h3>Papel da coordena&ccedil;&atilde;o</h3>
+              <p>
+                Cuidar da continuidade, sintetizar ciclos e proteger o processo
+                de excesso de burocracia, mantendo o projeto vivo e leg&iacute;vel.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="tab-panel" id="mural">
+          <p class="eyebrow">Prot&oacute;tipo local</p>
+          <h2>Mural de ideias permanente.</h2>
+          <p class="lede">
+            Este quadro simula o mural colaborativo. Por enquanto, os registros
+            ficam salvos apenas neste navegador. A etapa seguinte &eacute; escolher a
+            ferramenta online compartilhada.
+          </p>
+
+          <div class="mural-layout">
+            <form class="field-group" id="idea-form">
+              <label>
+                T&iacute;tulo da contribui&ccedil;&atilde;o
+                <input id="idea-title" required maxlength="90" placeholder="Ex: guia visual impermeavel para mergulho" />
+              </label>
+
+              <label>
+                Categoria
+                <select id="idea-column">
+                  <option value="temos">O que ja temos</option>
+                  <option value="livres">Ideias livres</option>
+                  <option value="referencias">Referencias e inspiracoes</option>
+                  <option value="maturacao">Ideias em maturacao</option>
+                  <option value="adotadas">Ideias adotadas</option>
+                  <option value="acoes">Proximas acoes</option>
+                </select>
+              </label>
+
+              <label>
+                Autor ou grupo
+                <input id="idea-author" maxlength="60" placeholder="Nome, dupla ou equipe" />
+              </label>
+
+              <label>
+                Descri&ccedil;&atilde;o
+                <textarea id="idea-description" required placeholder="Registre a ideia, referencia, duvida ou encaminhamento."></textarea>
+              </label>
+
+              <div class="actions">
+                <button class="button primary" type="submit">Adicionar</button>
+                <button class="button" type="button" id="export-json">Exportar JSON</button>
+                <button class="button danger" type="button" id="clear-board">Limpar</button>
+              </div>
+            </form>
+
+            <div class="board" id="board" aria-live="polite"></div>
+          </div>
+        </section>
+
+        <section class="tab-panel" id="rotina">
+          <p class="eyebrow">Tempo de matura&ccedil;&atilde;o</p>
+          <h2>Ciclos leves de duas semanas.</h2>
+          <div class="content-grid">
+            <article class="process-card">
+              <h3>Semana 1: abertura</h3>
+              <p>
+                Cada pessoa adiciona ideias, refer&ecirc;ncias, contatos, materiais
+                e perguntas quando puder. N&atilde;o h&aacute; exig&ecirc;ncia de texto formal.
+              </p>
+            </article>
+            <article class="process-card">
+              <h3>Semana 2: aproxima&ccedil;&atilde;o</h3>
+              <p>
+                A equipe comenta, combina ideias semelhantes, sinaliza interesse
+                e move propostas para matura&ccedil;&atilde;o ou ado&ccedil;&atilde;o.
+              </p>
+            </article>
+            <article class="process-card">
+              <h3>S&iacute;ntese do ciclo</h3>
+              <p>
+                Uma pessoa consolida 3 a 5 encaminhamentos: prioridades,
+                respons&aacute;veis volunt&aacute;rios, pend&ecirc;ncias e pr&oacute;ximos testes.
+              </p>
+            </article>
+            <article class="process-card">
+              <h3>Crit&eacute;rios de prioridade</h3>
+              <p>
+                Viabilidade, impacto extensionista, ader&ecirc;ncia ao territ&oacute;rio,
+                seguran&ccedil;a em campo, utilidade para parceiros e rela&ccedil;&atilde;o com o Hub.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="tab-panel" id="comunicacao">
+          <p class="eyebrow">Comunica&ccedil;&atilde;o org&acirc;nica</p>
+          <h2>Manter o projeto no radar sem cansar a equipe.</h2>
+          <ul>
+            <li>Atualiza&ccedil;&otilde;es curtas nos canais que a equipe j&aacute; usa no dia a dia.</li>
+            <li>Mensagens de ciclo com links diretos para novas ideias ou decis&otilde;es.</li>
+            <li>Reuni&otilde;es s&iacute;ncronas apenas quando houver decis&otilde;es, oficinas ou travas reais.</li>
+            <li>Registro das decis&otilde;es no mural, para que ningu&eacute;m dependa da mem&oacute;ria do chat.</li>
+          </ul>
+          <p class="note">
+            Sugest&atilde;o de regra simples: o chat avisa que algo mudou; o mural guarda
+            a informa&ccedil;&atilde;o. Assim a conversa continua leve, mas o projeto n&atilde;o se perde.
+          </p>
+        </section>
+
+        <section class="tab-panel" id="notion">
+          <p class="eyebrow">Integra&ccedil;&atilde;o operacional</p>
+          <h2>Notion como mural vivo da equipe.</h2>
+          <p class="lede">
+            O HTML funciona como apresenta&ccedil;&atilde;o p&uacute;blica da metodologia. O Notion
+            ser&aacute; o ambiente colaborativo interno, onde cada membro pode comentar,
+            anexar refer&ecirc;ncias, assumir ideias e acompanhar os ciclos.
+          </p>
+
+          <div class="notion-grid">
+            <article class="notion-card">
+              <h3>Link do mural</h3>
+              <p>
+                Cole aqui o link compartilhado da p&aacute;gina ou database do Notion.
+                Ele ficar&aacute; salvo neste navegador e poder&aacute; ser atualizado depois
+                no c&oacute;digo antes da publica&ccedil;&atilde;o final.
+              </p>
+              <div class="notion-link-box">
+                <label>
+                  URL do Notion
+                  <input id="notion-url" type="url" placeholder="https://www.notion.so/..." />
+                </label>
+                <div class="actions">
+                  <button class="button primary" type="button" id="save-notion-url">Salvar link</button>
+                  <a class="button" id="open-notion" href="#" target="_blank" rel="noopener">Abrir mural</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="notion-card">
+              <h3>Estrutura sugerida no Notion</h3>
+              <ul class="checklist">
+                <li><strong>Banco de ideias livres:</strong> entradas r&aacute;pidas, sem formato obrigat&oacute;rio.</li>
+                <li><strong>Refer&ecirc;ncias e inspira&ccedil;&otilde;es:</strong> links, imagens, guias, artigos e materiais de parceiros.</li>
+                <li><strong>Funda&ccedil;&atilde;o tecnol&oacute;gica:</strong> Hub, GitHub, apps, termos, mapas e documentos j&aacute; existentes.</li>
+                <li><strong>Ado&ccedil;&atilde;o de ideias:</strong> respons&aacute;veis volunt&aacute;rios, status, pr&oacute;ximo passo e ciclo de trabalho.</li>
+                <li><strong>S&iacute;ntese por ciclo:</strong> decis&otilde;es, prioridades, pend&ecirc;ncias e encaminhamentos.</li>
+              </ul>
+            </article>
+          </div>
+
+          <p class="note">
+            Para a publica&ccedil;&atilde;o no GitHub Pages, a integra&ccedil;&atilde;o recomendada &eacute; por link
+            compartilhado ou embed p&uacute;blico. Integra&ccedil;&atilde;o via API do Notion exige token
+            privado e deve ficar em um backend, nunca exposta diretamente no HTML.
+          </p>
+        </section>
+
+        <section class="tab-panel" id="online">
+          <p class="eyebrow">Escolha da ferramenta</p>
+          <h2>Como transformar o mural em um espa&ccedil;o online real.</h2>
+          <div class="option-list">
+            <article class="option">
+              <strong>Op&ccedil;&atilde;o 1: Notion</strong>
+              <p>
+                Melhor para come&ccedil;ar r&aacute;pido. Permite Kanban, coment&aacute;rios,
+                anexos, links, respons&aacute;veis e visualiza&ccedil;&otilde;es diferentes sem programar.
+              </p>
+            </article>
+            <article class="option">
+              <strong>Op&ccedil;&atilde;o 2: GitHub Discussions ou Issues</strong>
+              <p>
+                Melhor para rastreabilidade e integra&ccedil;&atilde;o com o Hub. Cada ideia
+                pode virar uma discuss&atilde;o ou issue, com etiquetas por frente de trabalho.
+              </p>
+            </article>
+            <article class="option">
+              <strong>Op&ccedil;&atilde;o 3: Google Forms + Google Sheets</strong>
+              <p>
+                Melhor para participantes externos ou escolas. A entrada fica
+                simples, e a planilha vira base para triagem e exporta&ccedil;&atilde;o.
+              </p>
+            </article>
+            <article class="option">
+              <strong>Op&ccedil;&atilde;o 4: Hub com backend</strong>
+              <p>
+                Melhor para uma fase madura. O HTML do Hub pode receber login,
+                banco de dados e mural multiusu&aacute;rio, mas isso exige hospedagem,
+                autentica&ccedil;&atilde;o e regras de modera&ccedil;&atilde;o.
+              </p>
+            </article>
+          </div>
+          <p class="note">
+            Recomenda&ccedil;&atilde;o inicial: usar Notion para a equipe interna e GitHub para
+            registrar decis&otilde;es t&eacute;cnicas. Depois, quando o fluxo estiver validado,
+            o Hub pode exibir uma vers&atilde;o p&uacute;blica curada das ideias e produtos.
+          </p>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const tabs = document.querySelectorAll(".tab");
+      const panels = document.querySelectorAll(".tab-panel");
+      const form = document.getElementById("idea-form");
+      const board = document.getElementById("board");
+      const clearBoard = document.getElementById("clear-board");
+      const exportJson = document.getElementById("export-json");
+      const notionUrl = document.getElementById("notion-url");
+      const saveNotionUrl = document.getElementById("save-notion-url");
+      const openNotion = document.getElementById("open-notion");
+
+      const columns = [
+        ["temos", "O que ja temos"],
+        ["livres", "Ideias livres"],
+        ["referencias", "Referencias e inspiracoes"],
+        ["maturacao", "Ideias em maturacao"],
+        ["adotadas", "Ideias adotadas"],
+        ["acoes", "Proximas acoes"]
+      ];
+
+      const seedIdeas = [
+        {
+          title: "Hub digital e apps de campo",
+          column: "temos",
+          author: "Equipe",
+          description: "Centralizar links do Hub, repositorios, aplicativos de levantamento e documentos ja desenvolvidos."
+        },
+        {
+          title: "Briefing ecologico para operadoras",
+          column: "livres",
+          author: "Equipe",
+          description: "Criar um roteiro curto para guias e dive masters apresentarem macroalgas, costoes e seguranca ambiental antes da atividade."
+        },
+        {
+          title: "Guia visual impermeavel",
+          column: "maturacao",
+          author: "Equipe",
+          description: "Testar formato de prancheta para uso embarcado e subaquatico, com especies-chave e observacoes simples."
+        }
+      ];
+
+      function getIdeas() {
+        const saved = localStorage.getItem("cocriacao_ideas");
+        if (saved) {
+          return JSON.parse(saved);
+        }
+        localStorage.setItem("cocriacao_ideas", JSON.stringify(seedIdeas));
+        return seedIdeas;
+      }
+
+      function saveIdeas(ideas) {
+        localStorage.setItem("cocriacao_ideas", JSON.stringify(ideas));
+      }
+
+      function escapeHtml(value) {
+        return value.replace(/[&<>"']/g, (char) => ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#039;"
+        })[char]);
+      }
+
+      function renderBoard() {
+        const ideas = getIdeas();
+        board.innerHTML = "";
+
+        columns.forEach(([key, title]) => {
+          const filtered = ideas.filter((idea) => idea.column === key);
+          const column = document.createElement("section");
+          column.className = "column";
+          column.innerHTML = `
+            <h3>${title}<span class="count">${filtered.length}</span></h3>
+            <div class="idea-list">
+              ${
+                filtered.length
+                  ? filtered.map((idea, index) => `
+                      <article class="idea-card">
+                        <strong>${escapeHtml(idea.title)}</strong>
+                        <p>${escapeHtml(idea.description)}</p>
+                        <div class="idea-meta">
+                          <span class="pill">${escapeHtml(idea.author || "Sem autor")}</span>
+                          <button class="button" type="button" data-delete="${ideas.indexOf(idea)}">Remover</button>
+                        </div>
+                      </article>
+                    `).join("")
+                  : '<p class="empty">Sem itens nesta coluna.</p>'
+              }
+            </div>
+          `;
+          board.appendChild(column);
+        });
+
+        board.querySelectorAll("[data-delete]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const ideas = getIdeas();
+            ideas.splice(Number(button.dataset.delete), 1);
+            saveIdeas(ideas);
+            renderBoard();
+          });
+        });
+      }
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          tabs.forEach((item) => item.setAttribute("aria-selected", "false"));
+          panels.forEach((panel) => panel.classList.remove("active"));
+          tab.setAttribute("aria-selected", "true");
+          document.getElementById(tab.dataset.tab).classList.add("active");
+        });
+      });
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const ideas = getIdeas();
+        ideas.push({
+          title: document.getElementById("idea-title").value.trim(),
+          column: document.getElementById("idea-column").value,
+          author: document.getElementById("idea-author").value.trim(),
+          description: document.getElementById("idea-description").value.trim()
+        });
+        saveIdeas(ideas);
+        form.reset();
+        renderBoard();
+      });
+
+      clearBoard.addEventListener("click", () => {
+        if (confirm("Limpar todas as ideias salvas neste navegador?")) {
+          localStorage.removeItem("cocriacao_ideas");
+          renderBoard();
+        }
+      });
+
+      exportJson.addEventListener("click", () => {
+        const blob = new Blob([JSON.stringify(getIdeas(), null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "mural-cocriacao-etapa-1.json";
+        link.click();
+        URL.revokeObjectURL(url);
+      });
+
+      function updateNotionLink() {
+        const saved = localStorage.getItem("cocriacao_notion_url") || "";
+        notionUrl.value = saved;
+        openNotion.href = saved || "#";
+        openNotion.setAttribute("aria-disabled", saved ? "false" : "true");
+      }
+
+      saveNotionUrl.addEventListener("click", () => {
+        localStorage.setItem("cocriacao_notion_url", notionUrl.value.trim());
+        updateNotionLink();
+      });
+
+      renderBoard();
+      updateNotionLink();
+    </script>
+  </body>
+</html>
