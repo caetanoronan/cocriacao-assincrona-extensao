@@ -3,23 +3,34 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Etapa 1 | Co-criacao Assincrona</title>
+    <title>Etapa 1 | Co-cria&ccedil;&atilde;o Ass&iacute;ncrona</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <style>
       :root {
-        color-scheme: light;
-        --bg: #f5faf8;
-        --surface: #ffffff;
-        --surface-soft: #e9f4f1;
-        --text: #102522;
-        --muted: #55706b;
-        --line: #c9ddd8;
-        --accent: #0b7f73;
-        --accent-strong: #07564e;
-        --blue: #246b9f;
-        --green: #31835b;
-        --amber: #a96816;
-        --rose: #a53c60;
-        --shadow: 0 20px 50px rgba(20, 56, 50, 0.12);
+        color-scheme: dark;
+        --bg: #061014;
+        --bg-soft: #0b1f27;
+        --surface: rgba(12, 31, 39, 0.88);
+        --surface-strong: rgba(14, 40, 50, 0.96);
+        --surface-soft: rgba(125, 226, 209, 0.08);
+        --text: #edfafa;
+        --muted: #a8c3c8;
+        --line: rgba(168, 220, 224, 0.18);
+        --accent: #72e6d2;
+        --accent-strong: #b9fbff;
+        --warm: #ffb85c;
+        --green: #8bf2a4;
+        --pink: #ff7bd5;
+        --violet: #9d8cff;
+        --blue: #5ecbff;
+        --lime: #d6ff6b;
+        --danger: #ff7c9a;
+        --shadow: 0 26px 70px rgba(0, 0, 0, 0.34);
       }
 
       * {
@@ -29,12 +40,39 @@
       body {
         margin: 0;
         min-height: 100vh;
-        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         color: var(--text);
         background:
-          linear-gradient(145deg, rgba(11, 127, 115, 0.12), transparent 35%),
-          linear-gradient(225deg, rgba(36, 107, 159, 0.12), transparent 38%),
-          var(--bg);
+          linear-gradient(116deg, rgba(255, 123, 213, 0.2), transparent 24%),
+          linear-gradient(146deg, rgba(94, 203, 255, 0.18), transparent 38%),
+          linear-gradient(238deg, rgba(214, 255, 107, 0.13), transparent 34%),
+          linear-gradient(298deg, rgba(255, 184, 92, 0.16), transparent 42%),
+          linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 52%, var(--bg) 100%);
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+        background-size: 46px 46px;
+        mask-image: linear-gradient(180deg, #000 0%, transparent 82%);
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: auto 0 0;
+        z-index: -2;
+        height: 42vh;
+        pointer-events: none;
+        background:
+          linear-gradient(180deg, transparent, rgba(114, 230, 210, 0.08) 28%, rgba(6, 16, 20, 0.22)),
+          repeating-linear-gradient(92deg, transparent 0 44px, rgba(139, 242, 164, 0.06) 45px 47px, transparent 48px 92px);
+        opacity: 0.75;
       }
 
       button,
@@ -46,6 +84,59 @@
 
       a {
         color: inherit;
+        text-decoration: none;
+      }
+
+      .ocean-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        overflow: hidden;
+        pointer-events: none;
+        opacity: 0.32;
+      }
+
+      .backdrop-organism {
+        position: absolute;
+        overflow: visible;
+        filter: drop-shadow(0 18px 34px rgba(0, 0, 0, 0.16));
+      }
+
+      .backdrop-organism path,
+      .backdrop-organism circle {
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .fish-school {
+        width: min(42vw, 470px);
+        right: -6vw;
+        top: 28vh;
+        color: var(--blue);
+      }
+
+      .fish-school path,
+      .fish-school circle,
+      .backdrop-shell path:first-child {
+        fill: currentColor;
+        stroke-width: 0;
+      }
+
+      .reef-left {
+        width: min(28vw, 280px);
+        left: -6vw;
+        bottom: -22px;
+        color: var(--green);
+      }
+
+      .backdrop-shell {
+        width: min(16vw, 150px);
+        right: 8vw;
+        bottom: 8vh;
+        color: var(--warm);
       }
 
       .shell {
@@ -55,11 +146,30 @@
       }
 
       .hero {
+        position: relative;
         display: grid;
         grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
         gap: 18px;
         align-items: stretch;
         margin-bottom: 18px;
+        padding: 28px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+        background:
+          linear-gradient(90deg, rgba(255, 123, 213, 0.2), rgba(157, 140, 255, 0.18), rgba(94, 203, 255, 0.18), rgba(139, 242, 164, 0.14), rgba(255, 184, 92, 0.18)),
+          linear-gradient(150deg, var(--surface-strong), var(--surface));
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(16px);
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto;
+        height: 6px;
+        background: linear-gradient(90deg, var(--pink), var(--violet), var(--blue), var(--green), var(--lime), var(--warm));
+        opacity: 0.95;
       }
 
       .panel,
@@ -71,15 +181,33 @@
       .field-group {
         border: 1px solid var(--line);
         border-radius: 8px;
-        background: rgba(255, 255, 255, 0.9);
+        background: linear-gradient(150deg, var(--surface-strong), var(--surface));
         box-shadow: var(--shadow);
+        backdrop-filter: blur(16px);
+      }
+
+      .hero-main,
+      .hero-side {
+        position: relative;
+        z-index: 1;
       }
 
       .hero-main,
       .hero-side,
-      .panel,
+      .panel {
+        padding: 24px;
+      }
+
+      .hero-main {
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+        backdrop-filter: none;
+      }
+
       .tab-panel {
         padding: 24px;
+        box-shadow: none;
       }
 
       .eyebrow {
@@ -87,7 +215,7 @@
         color: var(--accent);
         font-size: 0.78rem;
         font-weight: 800;
-        letter-spacing: 0.12em;
+        letter-spacing: 0.14em;
         text-transform: uppercase;
       }
 
@@ -131,12 +259,28 @@
       }
 
       .metric {
+        position: relative;
+        overflow: hidden;
         display: grid;
         gap: 4px;
         padding: 16px;
         border: 1px solid var(--line);
         border-radius: 8px;
-        background: var(--surface-soft);
+        background: linear-gradient(150deg, var(--surface-strong), var(--surface));
+      }
+
+      .metric::before,
+      .process-card::before,
+      .option::before,
+      .notion-card::before,
+      .idea-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        border-top: 3px solid transparent;
+        border-image: linear-gradient(90deg, var(--pink), var(--violet), var(--blue), var(--green), var(--warm)) 1;
+        opacity: 0.72;
       }
 
       .metric span {
@@ -166,15 +310,21 @@
         border: 1px solid var(--line);
         border-radius: 6px;
         color: var(--accent-strong);
-        background: var(--surface);
+        background: var(--surface-soft);
         font-weight: 800;
         cursor: pointer;
+        transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+      }
+
+      .tab:hover {
+        transform: translateY(-2px);
+        border-color: var(--accent);
       }
 
       .tab[aria-selected="true"] {
-        color: #ffffff;
+        color: #052429;
         border-color: var(--accent);
-        background: var(--accent);
+        background: linear-gradient(135deg, var(--accent), var(--accent-strong));
       }
 
       .tab-panel {
@@ -192,11 +342,13 @@
       }
 
       .process-card {
+        position: relative;
+        overflow: hidden;
         min-height: 170px;
         padding: 18px;
         border: 1px solid var(--line);
         border-radius: 8px;
-        background: var(--surface-soft);
+        background: linear-gradient(150deg, var(--surface-strong), var(--surface));
       }
 
       .process-card p,
@@ -228,7 +380,7 @@
         padding: 0 10px;
         border-radius: 999px;
         color: var(--accent-strong);
-        background: #dff0ed;
+        background: var(--surface-soft);
         font-size: 0.82rem;
         font-weight: 800;
       }
@@ -262,7 +414,7 @@
         border: 1px solid var(--line);
         border-radius: 6px;
         color: var(--text);
-        background: #fbfefd;
+        background: rgba(6, 16, 20, 0.36);
       }
 
       input,
@@ -292,21 +444,27 @@
         border: 1px solid var(--line);
         border-radius: 6px;
         color: var(--accent-strong);
-        background: var(--surface);
+        background: var(--surface-soft);
         font-weight: 800;
         cursor: pointer;
+        transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+        border-color: var(--accent);
       }
 
       .button.primary {
-        color: #ffffff;
-        border-color: var(--accent);
-        background: var(--accent);
+        color: #052429;
+        border-color: transparent;
+        background: linear-gradient(135deg, var(--accent), var(--accent-strong));
       }
 
       .button.danger {
-        color: #8f233a;
-        border-color: #e7b8c3;
-        background: #fff0f3;
+        color: var(--danger);
+        border-color: rgba(255, 124, 154, 0.42);
+        background: rgba(255, 124, 154, 0.1);
       }
 
       .board {
@@ -341,6 +499,8 @@
       }
 
       .idea-card {
+        position: relative;
+        overflow: hidden;
         display: grid;
         gap: 8px;
         padding: 12px;
@@ -392,10 +552,12 @@
       }
 
       .option {
+        position: relative;
+        overflow: hidden;
         padding: 16px;
         border: 1px solid var(--line);
         border-radius: 8px;
-        background: var(--surface-soft);
+        background: linear-gradient(150deg, var(--surface-strong), var(--surface));
       }
 
       .option strong {
@@ -409,13 +571,15 @@
       }
 
       .notion-card {
+        position: relative;
+        overflow: hidden;
         display: grid;
         gap: 12px;
         align-content: start;
         padding: 18px;
         border: 1px solid var(--line);
         border-radius: 8px;
-        background: var(--surface-soft);
+        background: linear-gradient(150deg, var(--surface-strong), var(--surface));
       }
 
       .notion-card p {
@@ -430,7 +594,7 @@
         padding: 14px;
         border: 1px dashed var(--line);
         border-radius: 8px;
-        background: #fbfefd;
+        background: rgba(6, 16, 20, 0.28);
       }
 
       .notion-preview {
@@ -438,7 +602,7 @@
         border: 1px solid var(--line);
         border-radius: 8px;
         overflow: hidden;
-        background: #fbfefd;
+        background: linear-gradient(150deg, var(--surface-strong), var(--surface));
       }
 
       .notion-preview-empty {
@@ -482,7 +646,7 @@
         padding: 12px;
         border: 1px solid var(--line);
         border-radius: 8px;
-        background: #fbfefd;
+        background: rgba(6, 16, 20, 0.28);
       }
 
       @media (max-width: 920px) {
@@ -518,6 +682,28 @@
     </style>
   </head>
   <body>
+    <div class="ocean-backdrop" aria-hidden="true">
+      <svg class="backdrop-organism fish-school" viewBox="0 0 420 160" role="img">
+        <path d="M24 42c28-25 70-26 105-5l24-17v45l-24-17c-35 22-77 20-105-6Z" />
+        <circle cx="106" cy="38" r="4" />
+        <path d="M162 110c24-21 60-22 90-4l21-15v39l-21-15c-30 19-66 17-90-5Z" />
+        <circle cx="232" cy="107" r="3" />
+        <path d="M286 52c20-17 50-18 75-3l18-13v33l-18-13c-25 16-55 15-75-4Z" />
+        <circle cx="346" cy="50" r="3" />
+      </svg>
+      <svg class="backdrop-organism reef-left" viewBox="0 0 220 220" role="img">
+        <path d="M38 210c-8-52 4-95 36-132" />
+        <path d="M92 210c-17-64-5-123 40-177" />
+        <path d="M150 210c-12-50 0-93 38-128" />
+        <path d="M73 108c-25-10-38-28-38-54" />
+        <path d="M130 120c31-14 46-39 43-74" />
+        <path d="M108 210V92M108 124c-26-11-39-29-38-55M108 150c28-8 45-28 48-60" />
+      </svg>
+      <svg class="backdrop-organism backdrop-shell" viewBox="0 0 130 110" role="img">
+        <path d="M18 91c4-43 23-71 48-76 25 5 44 33 48 76H18Z" />
+        <path d="M66 16v75M42 26c13 18 21 40 24 65M90 26c-13 18-21 40-24 65M25 58c16 8 29 19 41 33M107 58c-16 8-29 19-41 33" />
+      </svg>
+    </div>
     <div class="shell">
       <header class="hero">
         <div class="hero-main">
@@ -533,9 +719,9 @@
             <span class="tag">mural permanente</span>
             <span class="tag">ciclos leves</span>
             <span class="tag">ideias adotadas</span>
-            <span class="tag">sintese coletiva</span>
+            <span class="tag">s&iacute;ntese coletiva</span>
           </div>
-          <div class="hero-actions" aria-label="Acoes principais">
+          <div class="hero-actions" aria-label="A&ccedil;&otilde;es principais">
             <button class="button primary" type="button" data-open-tab="mural">Testar mural</button>
             <button class="button" type="button" data-open-tab="notion">Configurar Notion</button>
           </div>
@@ -611,7 +797,7 @@
         </section>
 
         <section class="tab-panel" id="mural">
-          <p class="eyebrow">Prot&oacute;tipo local</p>
+          <p class="eyebrow">Mural conectado</p>
           <h2>Mural de ideias permanente.</h2>
           <p class="lede">
             Este quadro envia contribui&ccedil;&otilde;es para o mural online no Notion quando
@@ -622,18 +808,18 @@
             <form class="field-group" id="idea-form">
               <label>
                 T&iacute;tulo da contribui&ccedil;&atilde;o
-                <input id="idea-title" required maxlength="90" placeholder="Ex: guia visual impermeavel para mergulho" />
+                <input id="idea-title" required maxlength="90" placeholder="Ex: guia visual imperme&aacute;vel para mergulho" />
               </label>
 
               <label>
                 Categoria
                 <select id="idea-column">
-                  <option value="temos">O que ja temos</option>
+                  <option value="temos">O que j&aacute; temos</option>
                   <option value="livres">Ideias livres</option>
-                  <option value="referencias">Referencias e inspiracoes</option>
-                  <option value="maturacao">Ideias em maturacao</option>
+                  <option value="referencias">Refer&ecirc;ncias e inspira&ccedil;&otilde;es</option>
+                  <option value="maturacao">Ideias em matura&ccedil;&atilde;o</option>
                   <option value="adotadas">Ideias adotadas</option>
-                  <option value="acoes">Proximas acoes</option>
+                  <option value="acoes">Pr&oacute;ximas a&ccedil;&otilde;es</option>
                 </select>
               </label>
 
@@ -644,7 +830,7 @@
 
               <label>
                 Descri&ccedil;&atilde;o
-                <textarea id="idea-description" required placeholder="Registre a ideia, referencia, duvida ou encaminhamento."></textarea>
+                <textarea id="idea-description" required placeholder="Registre a ideia, refer&ecirc;ncia, d&uacute;vida ou encaminhamento."></textarea>
               </label>
 
               <div class="actions">
@@ -866,12 +1052,12 @@
       const onlineSubmitEndpoint = "https://cocriacao-assincrona-extensao.vercel.app/api/ideas";
 
       const columns = [
-        ["temos", "O que ja temos"],
+        ["temos", "O que já temos"],
         ["livres", "Ideias livres"],
-        ["referencias", "Referencias e inspiracoes"],
-        ["maturacao", "Ideias em maturacao"],
+        ["referencias", "Referências e inspirações"],
+        ["maturacao", "Ideias em maturação"],
         ["adotadas", "Ideias adotadas"],
-        ["acoes", "Proximas acoes"]
+        ["acoes", "Próximas ações"]
       ];
 
       const seedIdeas = [
@@ -879,21 +1065,21 @@
           title: "Hub digital e apps de campo",
           column: "temos",
           author: "Equipe",
-          description: "Centralizar links do Hub, repositorios, aplicativos de levantamento e documentos ja desenvolvidos.",
+          description: "Centralizar links do Hub, repositórios, aplicativos de levantamento e documentos já desenvolvidos.",
           votes: 0
         },
         {
-          title: "Briefing ecologico para operadoras",
+          title: "Briefing ecológico para operadoras",
           column: "livres",
           author: "Equipe",
-          description: "Criar um roteiro curto para guias e dive masters apresentarem macroalgas, costoes e seguranca ambiental antes da atividade.",
+          description: "Criar um roteiro curto para guias e dive masters apresentarem macroalgas, costões e segurança ambiental antes da atividade.",
           votes: 0
         },
         {
-          title: "Guia visual impermeavel",
+          title: "Guia visual impermeável",
           column: "maturacao",
           author: "Equipe",
-          description: "Testar formato de prancheta para uso embarcado e subaquatico, com especies-chave e observacoes simples.",
+          description: "Testar formato de prancheta para uso embarcado e subaquático, com espécies-chave e observações simples.",
           votes: 0
         }
       ];
@@ -1025,7 +1211,7 @@
           .then(async (response) => {
             const data = await response.json().catch(() => ({}));
             if (!response.ok || data.ok === false) {
-              throw new Error(data.message || "Nao foi possivel enviar para o Notion.");
+              throw new Error(data.message || "Não foi possível enviar para o Notion.");
             }
 
             addLocalIdea(idea);
@@ -1035,7 +1221,7 @@
           .catch((error) => {
             addLocalIdea(idea);
             form.reset();
-            submitStatus.textContent = `A API online ainda nao respondeu. A ideia foi salva localmente. Detalhe: ${error.message}`;
+            submitStatus.textContent = `A API online ainda não respondeu. A ideia foi salva localmente. Detalhe: ${error.message}`;
           })
           .finally(() => {
             submitIdea.disabled = false;
