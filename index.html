@@ -284,6 +284,10 @@
         font-size: clamp(2.8rem, 7vw, 5.8rem);
         line-height: 0.94;
         letter-spacing: 0;
+        color: transparent;
+        background: linear-gradient(90deg, var(--pink), var(--violet), var(--blue), var(--green), var(--lime), var(--warm));
+        -webkit-background-clip: text;
+        background-clip: text;
       }
 
       h2 {
@@ -291,11 +295,16 @@
         font-size: clamp(1.8rem, 4vw, 3.2rem);
         line-height: 1;
         letter-spacing: 0;
+        color: transparent;
+        background: linear-gradient(90deg, var(--accent), var(--blue), var(--violet), var(--pink), var(--warm));
+        -webkit-background-clip: text;
+        background-clip: text;
       }
 
       h3 {
         margin-bottom: 10px;
         font-size: 1.08rem;
+        color: var(--accent-strong);
       }
 
       .lede {
