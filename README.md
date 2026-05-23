@@ -9,18 +9,24 @@ Organizar a primeira etapa do projeto antes da atualizacao do Hub principal: ali
 ## Arquivos
 
 - `index.html`: pagina publica para GitHub Pages.
+- `api/ideas.js`: funcao serverless para enviar ideias ao Notion via Vercel.
+- `vercel.json`: configuracao minima da funcao Vercel.
+- `INTEGRACAO_NOTION.md`: passo a passo completo para clonar e publicar a integracao.
 - `notion-template.md`: modelo textual para criar o mural no Notion.
 - `PUBLICACAO.md`: checklist para publicar como novo repositorio no GitHub Pages.
 
 ## Integracao com Notion
 
-A pagina foi pensada para funcionar de forma segura em hospedagem estatica.
+A pagina foi pensada para funcionar de forma segura em hospedagem estatica e backend separado.
 
-- O HTML pode guardar um link do Notion no navegador via `localStorage`.
-- A aba `Notion` permite salvar o link do mural e tentar abrir uma previa incorporada.
-- O mural real deve viver no Notion, com permissoes controladas para a equipe.
+- O GitHub Pages publica o HTML estatico.
+- A Vercel hospeda `/api/ideas`, que recebe as ideias do formulario.
+- A funcao Vercel usa `NOTION_TOKEN` e `NOTION_DATA_SOURCE_ID` como variaveis secretas.
+- O mural real vive no Notion, com permissoes controladas para a equipe.
 - Tokens da API do Notion nao devem ser colocados no HTML publico.
-- Se futuramente houver necessidade de sincronizacao automatica, ela deve passar por um backend ou automacao segura.
+- Se a API estiver indisponivel, o site salva uma copia local no navegador.
+
+Consulte `INTEGRACAO_NOTION.md` para repetir este procedimento em outro workspace ou repositorio.
 
 ## Nome sugerido do repositorio
 
