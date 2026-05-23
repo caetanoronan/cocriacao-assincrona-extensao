@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/ideas.js": {
+      "maxDuration": 10
+    }
+  }
+}

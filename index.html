@@ -614,9 +614,8 @@
           <p class="eyebrow">Prot&oacute;tipo local</p>
           <h2>Mural de ideias permanente.</h2>
           <p class="lede">
-            Este quadro simula o mural colaborativo. Por enquanto, os registros
-            ficam salvos apenas neste navegador. A etapa seguinte &eacute; escolher a
-            ferramenta online compartilhada.
+            Este quadro envia contribui&ccedil;&otilde;es para o mural online no Notion quando
+            a API estiver ativa. Uma c&oacute;pia local tamb&eacute;m fica salva neste navegador.
           </p>
 
           <div class="mural-layout">
@@ -649,10 +648,11 @@
               </label>
 
               <div class="actions">
-                <button class="button primary" type="submit">Adicionar</button>
+                <button class="button primary" type="submit" id="submit-idea">Enviar ideia</button>
                 <button class="button" type="button" id="export-json">Exportar JSON</button>
                 <button class="button danger" type="button" id="clear-board">Limpar</button>
               </div>
+              <p class="note" id="submit-status" aria-live="polite"></p>
             </form>
 
             <div class="board" id="board" aria-live="polite"></div>
@@ -857,10 +857,13 @@
       const board = document.getElementById("board");
       const clearBoard = document.getElementById("clear-board");
       const exportJson = document.getElementById("export-json");
+      const submitIdea = document.getElementById("submit-idea");
+      const submitStatus = document.getElementById("submit-status");
       const notionUrl = document.getElementById("notion-url");
       const saveNotionUrl = document.getElementById("save-notion-url");
       const openNotion = document.getElementById("open-notion");
       const defaultNotionUrl = "https://www.notion.so/369d14c78a5681d7a249cbf518075897";
+      const onlineSubmitEndpoint = "https://cocriacao-assincrona-extensao.vercel.app/api/ideas";
 
       const columns = [
         ["temos", "O que ja temos"],
@@ -906,6 +909,13 @@
 
       function saveIdeas(ideas) {
         localStorage.setItem("cocriacao_ideas", JSON.stringify(ideas));
+      }
+
+      function addLocalIdea(idea) {
+        const ideas = getIdeas();
+        ideas.push(idea);
+        saveIdeas(ideas);
+        renderBoard();
       }
 
       function escapeHtml(value) {
@@ -995,17 +1005,42 @@
 
       form.addEventListener("submit", (event) => {
         event.preventDefault();
-        const ideas = getIdeas();
-        ideas.push({
+        const idea = {
           title: document.getElementById("idea-title").value.trim(),
           column: document.getElementById("idea-column").value,
           author: document.getElementById("idea-author").value.trim(),
           description: document.getElementById("idea-description").value.trim(),
           votes: 0
-        });
-        saveIdeas(ideas);
-        form.reset();
-        renderBoard();
+        };
+
+        submitIdea.disabled = true;
+        submitIdea.textContent = "Enviando...";
+        submitStatus.textContent = "Enviando para o mural online.";
+
+        fetch(onlineSubmitEndpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(idea)
+        })
+          .then(async (response) => {
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok || data.ok === false) {
+              throw new Error(data.message || "Nao foi possivel enviar para o Notion.");
+            }
+
+            addLocalIdea(idea);
+            form.reset();
+            submitStatus.textContent = "Ideia enviada para o Notion e salva neste navegador.";
+          })
+          .catch((error) => {
+            addLocalIdea(idea);
+            form.reset();
+            submitStatus.textContent = `A API online ainda nao respondeu. A ideia foi salva localmente. Detalhe: ${error.message}`;
+          })
+          .finally(() => {
+            submitIdea.disabled = false;
+            submitIdea.textContent = "Enviar ideia";
+          });
       });
 
       clearBoard.addEventListener("click", () => {
