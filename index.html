@@ -847,6 +847,7 @@
       const notionUrl = document.getElementById("notion-url");
       const saveNotionUrl = document.getElementById("save-notion-url");
       const openNotion = document.getElementById("open-notion");
+      const defaultNotionUrl = "https://www.notion.so/369d14c78a5681d7a249cbf518075897";
 
       const columns = [
         ["temos", "O que ja temos"],
@@ -1012,7 +1013,7 @@
       });
 
       function updateNotionLink() {
-        const saved = localStorage.getItem("cocriacao_notion_url") || "";
+        const saved = localStorage.getItem("cocriacao_notion_url") || defaultNotionUrl;
         const preview = document.getElementById("notion-preview");
         notionUrl.value = saved;
         openNotion.href = saved || "#";
