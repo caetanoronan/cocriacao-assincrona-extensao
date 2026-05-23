@@ -1004,18 +1004,18 @@
           <p class="eyebrow">Integra&ccedil;&atilde;o operacional</p>
           <h2>Notion como mural vivo da equipe.</h2>
           <p class="lede">
-            O HTML funciona como apresenta&ccedil;&atilde;o p&uacute;blica da metodologia. O Notion
-            ser&aacute; o ambiente colaborativo interno, onde cada membro pode comentar,
-            anexar refer&ecirc;ncias, assumir ideias e acompanhar os ciclos.
+            A integra&ccedil;&atilde;o online j&aacute; est&aacute; configurada: o site p&uacute;blico coleta
+            contribui&ccedil;&otilde;es, uma fun&ccedil;&atilde;o segura na Vercel envia os dados e o Notion
+            organiza cada ideia como cart&atilde;o edit&aacute;vel pela equipe.
           </p>
 
           <div class="notion-grid">
             <article class="notion-card">
-              <h3>Link do mural</h3>
+              <h3>Como o envio funciona</h3>
               <p>
-                Cole aqui o link compartilhado da p&aacute;gina ou database do Notion.
-                Ele ficar&aacute; salvo neste navegador e poder&aacute; ser atualizado depois
-                no c&oacute;digo antes da publica&ccedil;&atilde;o final.
+                Quando algu&eacute;m preenche o mural neste site, a ideia &eacute; enviada para
+                a API da Vercel. Essa API usa o token privado do Notion, guardado
+                fora do HTML, e cria o cart&atilde;o no banco "Cart&otilde;es do mural".
               </p>
               <div class="notion-link-box">
                 <label>
@@ -1028,19 +1028,19 @@
                 </div>
               </div>
               <p>
-                O Notion bloqueia pr&eacute;vias incorporadas em sites externos. Use o bot&atilde;o
-                para abrir o mural em uma nova aba.
+                O Notion bloqueia pr&eacute;vias incorporadas em sites externos. Por isso,
+                o site mant&eacute;m o envio integrado e oferece abertura do mural em nova aba.
               </p>
             </article>
 
             <article class="notion-card">
-              <h3>Estrutura sugerida no Notion</h3>
+              <h3>O que acontece no Notion</h3>
               <ul class="checklist">
-                <li><strong>Banco de ideias livres:</strong> entradas r&aacute;pidas, sem formato obrigat&oacute;rio.</li>
-                <li><strong>Refer&ecirc;ncias e inspira&ccedil;&otilde;es:</strong> links, imagens, guias, artigos e materiais de parceiros.</li>
-                <li><strong>Funda&ccedil;&atilde;o tecnol&oacute;gica:</strong> Hub, GitHub, apps, termos, mapas e documentos j&aacute; existentes.</li>
-                <li><strong>Ado&ccedil;&atilde;o de ideias:</strong> respons&aacute;veis volunt&aacute;rios, status, pr&oacute;ximo passo e ciclo de trabalho.</li>
-                <li><strong>S&iacute;ntese por ciclo:</strong> decis&otilde;es, prioridades, pend&ecirc;ncias e encaminhamentos.</li>
+                <li><strong>Cart&atilde;o criado automaticamente:</strong> t&iacute;tulo, descri&ccedil;&atilde;o, autor e categoria entram no banco.</li>
+                <li><strong>Triagem pela equipe:</strong> status, prioridade, respons&aacute;vel e prazo podem ser ajustados no Notion.</li>
+                <li><strong>Colabora&ccedil;&atilde;o interna:</strong> coment&aacute;rios, anexos, links e complementos ficam concentrados no cart&atilde;o.</li>
+                <li><strong>Acompanhamento dos ciclos:</strong> ideias podem virar decis&otilde;es, a&ccedil;&otilde;es ou s&iacute;nteses por rodada de trabalho.</li>
+                <li><strong>Seguran&ccedil;a:</strong> o token do Notion n&atilde;o aparece no site p&uacute;blico.</li>
               </ul>
             </article>
           </div>
@@ -1052,50 +1052,47 @@
           </div>
 
           <p class="note">
-            Para a publica&ccedil;&atilde;o no GitHub Pages, a integra&ccedil;&atilde;o recomendada &eacute; por link
-            compartilhado. Integra&ccedil;&atilde;o via API do Notion exige token
-            privado e deve ficar em um backend, nunca exposta diretamente no HTML.
+            A c&oacute;pia local no navegador serve apenas como reserva. A perman&ecirc;ncia
+            compartilhada acontece no Notion, por meio da API protegida na Vercel.
           </p>
         </section>
 
         <section class="tab-panel" id="online">
-          <p class="eyebrow">Escolha da ferramenta</p>
-          <h2>Como transformar o mural em um espa&ccedil;o online real.</h2>
+          <p class="eyebrow">Arquitetura online</p>
+          <h2>O mural online j&aacute; est&aacute; em funcionamento.</h2>
           <div class="option-list">
             <article class="option">
-              <strong>Op&ccedil;&atilde;o 1: Notion</strong>
+              <strong>1. GitHub Pages</strong>
               <p>
-                Melhor para come&ccedil;ar r&aacute;pido. Permite Kanban, coment&aacute;rios,
-                anexos, links, respons&aacute;veis e visualiza&ccedil;&otilde;es diferentes sem programar.
+                Publica a apresenta&ccedil;&atilde;o e o formul&aacute;rio do mural. &Eacute; a camada
+                aberta para participantes registrarem contribui&ccedil;&otilde;es.
               </p>
             </article>
             <article class="option">
-              <strong>Op&ccedil;&atilde;o 2: GitHub Discussions ou Issues</strong>
+              <strong>2. Vercel API</strong>
               <p>
-                Melhor para rastreabilidade e integra&ccedil;&atilde;o com o Hub. Cada ideia
-                pode virar uma discuss&atilde;o ou issue, com etiquetas por frente de trabalho.
+                Recebe o envio do site e protege o token do Notion. Essa camada
+                evita expor credenciais no HTML p&uacute;blico.
               </p>
             </article>
             <article class="option">
-              <strong>Op&ccedil;&atilde;o 3: Google Forms + Google Sheets</strong>
+              <strong>3. Notion</strong>
               <p>
-                Melhor para participantes externos ou escolas. A entrada fica
-                simples, e a planilha vira base para triagem e exporta&ccedil;&atilde;o.
+                Guarda o banco de cart&otilde;es permanente, com status, tipo,
+                prioridade, respons&aacute;vel, prazo, notas e coment&aacute;rios.
               </p>
             </article>
             <article class="option">
-              <strong>Op&ccedil;&atilde;o 4: Hub com backend</strong>
+              <strong>4. C&oacute;pia local</strong>
               <p>
-                Melhor para uma fase madura. O HTML do Hub pode receber login,
-                banco de dados e mural multiusu&aacute;rio, mas isso exige hospedagem,
-                autentica&ccedil;&atilde;o e regras de modera&ccedil;&atilde;o.
+                Se a conex&atilde;o online falhar, a ideia ainda fica salva no navegador
+                da pessoa e pode ser exportada em JSON como conting&ecirc;ncia.
               </p>
             </article>
           </div>
           <p class="note">
-            Recomenda&ccedil;&atilde;o inicial: usar Notion para a equipe interna e GitHub para
-            registrar decis&otilde;es t&eacute;cnicas. Depois, quando o fluxo estiver validado,
-            o Hub pode exibir uma vers&atilde;o p&uacute;blica curada das ideias e produtos.
+            Fluxo atual: participante envia pelo GitHub Pages, a Vercel recebe com
+            seguran&ccedil;a e o Notion registra a contribui&ccedil;&atilde;o como cart&atilde;o permanente.
           </p>
         </section>
       </main>
