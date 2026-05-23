@@ -10,8 +10,13 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <script>
+      const savedTheme = localStorage.getItem("cocriacao-theme") || "dark";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    </script>
     <style>
-      :root {
+      :root,
+      :root[data-theme="dark"] {
         color-scheme: dark;
         --bg: #061014;
         --bg-soft: #0b1f27;
@@ -31,6 +36,28 @@
         --lime: #d6ff6b;
         --danger: #ff7c9a;
         --shadow: 0 26px 70px rgba(0, 0, 0, 0.34);
+      }
+
+      :root[data-theme="light"] {
+        color-scheme: light;
+        --bg: #f4fbfb;
+        --bg-soft: #e5f3f4;
+        --surface: rgba(255, 255, 255, 0.9);
+        --surface-strong: #ffffff;
+        --surface-soft: rgba(0, 128, 119, 0.08);
+        --text: #09272d;
+        --muted: #45666d;
+        --line: rgba(6, 88, 93, 0.18);
+        --accent: #008f84;
+        --accent-strong: #005f68;
+        --warm: #b76500;
+        --green: #11843b;
+        --pink: #c41486;
+        --violet: #5f45c8;
+        --blue: #006db1;
+        --lime: #6c8700;
+        --danger: #b81f46;
+        --shadow: 0 18px 48px rgba(9, 39, 45, 0.1);
       }
 
       * {
@@ -143,6 +170,31 @@
         width: min(1180px, calc(100% - 32px));
         margin: 0 auto;
         padding: 28px 0 44px;
+      }
+
+      .theme-toggle {
+        position: fixed;
+        z-index: 10;
+        top: 18px;
+        right: 18px;
+        min-width: 72px;
+        min-height: 40px;
+        padding: 0 14px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        color: var(--text);
+        background: var(--surface-strong);
+        box-shadow: var(--shadow);
+        font: inherit;
+        font-size: 0.82rem;
+        font-weight: 800;
+        cursor: pointer;
+        transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+      }
+
+      .theme-toggle:hover {
+        transform: translateY(-2px);
+        border-color: var(--accent);
       }
 
       .hero {
@@ -705,6 +757,10 @@
       </svg>
     </div>
     <div class="shell">
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Alternar tema">
+        Tema
+      </button>
+
       <header class="hero">
         <div class="hero-main">
           <p class="eyebrow">Etapa 1</p>
@@ -1039,6 +1095,8 @@
     <script>
       const tabs = document.querySelectorAll(".tab");
       const panels = document.querySelectorAll(".tab-panel");
+      const themeToggle = document.getElementById("theme-toggle");
+      const root = document.documentElement;
       const form = document.getElementById("idea-form");
       const board = document.getElementById("board");
       const clearBoard = document.getElementById("clear-board");
@@ -1050,6 +1108,20 @@
       const openNotion = document.getElementById("open-notion");
       const defaultNotionUrl = "https://www.notion.so/369d14c78a5681d7a249cbf518075897";
       const onlineSubmitEndpoint = "https://cocriacao-assincrona-extensao.vercel.app/api/ideas";
+
+      function updateThemeLabel() {
+        const isDark = root.getAttribute("data-theme") === "dark";
+        themeToggle.textContent = isDark ? "Claro" : "Escuro";
+      }
+
+      updateThemeLabel();
+
+      themeToggle.addEventListener("click", () => {
+        const nextTheme = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        root.setAttribute("data-theme", nextTheme);
+        localStorage.setItem("cocriacao-theme", nextTheme);
+        updateThemeLabel();
+      });
 
       const columns = [
         ["temos", "O que já temos"],
