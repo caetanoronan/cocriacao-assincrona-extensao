@@ -214,6 +214,13 @@
         margin-top: 14px;
       }
 
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
       .tag {
         display: inline-flex;
         align-items: center;
@@ -426,6 +433,29 @@
         background: #fbfefd;
       }
 
+      .notion-preview {
+        min-height: 360px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+        background: #fbfefd;
+      }
+
+      .notion-preview iframe {
+        width: 100%;
+        height: 420px;
+        border: 0;
+      }
+
+      .notion-preview-empty {
+        display: grid;
+        min-height: 360px;
+        place-items: center;
+        padding: 20px;
+        color: var(--muted);
+        text-align: center;
+      }
+
       .checklist {
         display: grid;
         gap: 10px;
@@ -491,6 +521,10 @@
             <span class="tag">ideias adotadas</span>
             <span class="tag">sintese coletiva</span>
           </div>
+          <div class="hero-actions" aria-label="Acoes principais">
+            <button class="button primary" type="button" data-open-tab="mural">Testar mural</button>
+            <button class="button" type="button" data-open-tab="notion">Configurar Notion</button>
+          </div>
         </div>
 
         <aside class="hero-side" aria-label="Resumo operacional">
@@ -513,6 +547,7 @@
         <nav class="tabs" aria-label="Abas da etapa">
           <button class="tab" type="button" aria-selected="true" data-tab="visao">Vis&atilde;o geral</button>
           <button class="tab" type="button" aria-selected="false" data-tab="mural">Mural de ideias</button>
+          <button class="tab" type="button" aria-selected="false" data-tab="participacao">Participa&ccedil;&atilde;o</button>
           <button class="tab" type="button" aria-selected="false" data-tab="rotina">Rotina ass&iacute;ncrona</button>
           <button class="tab" type="button" aria-selected="false" data-tab="comunicacao">Comunica&ccedil;&atilde;o</button>
           <button class="tab" type="button" aria-selected="false" data-tab="notion">Notion</button>
@@ -610,6 +645,46 @@
           </div>
         </section>
 
+        <section class="tab-panel" id="participacao">
+          <p class="eyebrow">Intera&ccedil;&atilde;o coletiva</p>
+          <h2>Como a equipe contribui sem depender de reuni&otilde;es.</h2>
+          <div class="content-grid">
+            <article class="process-card">
+              <h3>1. Registrar</h3>
+              <p>
+                Cada membro pode inserir uma ideia, refer&ecirc;ncia, demanda ou d&uacute;vida
+                no mural, mesmo que ainda esteja incompleta.
+              </p>
+            </article>
+            <article class="process-card">
+              <h3>2. Comentar</h3>
+              <p>
+                As contribui&ccedil;&otilde;es devem receber perguntas, complementos, links e
+                conex&otilde;es com outras frentes do projeto.
+              </p>
+            </article>
+            <article class="process-card">
+              <h3>3. Apoiar</h3>
+              <p>
+                A equipe pode sinalizar interesse em uma proposta. No Notion, isso
+                pode virar uma propriedade de apoio, prioridade ou respons&aacute;vel.
+              </p>
+            </article>
+            <article class="process-card">
+              <h3>4. Adotar</h3>
+              <p>
+                Uma ideia adotada ganha respons&aacute;vel volunt&aacute;rio, pr&oacute;ximo passo
+                pequeno e ciclo de acompanhamento.
+              </p>
+            </article>
+          </div>
+          <p class="note">
+            Regra de ouro: ningu&eacute;m precisa chegar com uma ideia pronta. A fun&ccedil;&atilde;o
+            do mural &eacute; permitir que uma ideia pequena encontre outras pessoas,
+            refer&ecirc;ncias e usos concretos.
+          </p>
+        </section>
+
         <section class="tab-panel" id="rotina">
           <p class="eyebrow">Tempo de matura&ccedil;&atilde;o</p>
           <h2>Ciclos leves de duas semanas.</h2>
@@ -687,6 +762,11 @@
                   <a class="button" id="open-notion" href="#" target="_blank" rel="noopener">Abrir mural</a>
                 </div>
               </div>
+              <p>
+                Se a p&aacute;gina do Notion estiver p&uacute;blica e permitir visualiza&ccedil;&atilde;o
+                incorporada, ela aparecer&aacute; abaixo como pr&eacute;via. Caso contr&aacute;rio,
+                use o bot&atilde;o para abrir em nova aba.
+              </p>
             </article>
 
             <article class="notion-card">
@@ -699,6 +779,12 @@
                 <li><strong>S&iacute;ntese por ciclo:</strong> decis&otilde;es, prioridades, pend&ecirc;ncias e encaminhamentos.</li>
               </ul>
             </article>
+          </div>
+
+          <div class="notion-preview" id="notion-preview" aria-live="polite">
+            <div class="notion-preview-empty">
+              Cole e salve o link do Notion para testar a abertura do mural.
+            </div>
           </div>
 
           <p class="note">
@@ -776,19 +862,22 @@
           title: "Hub digital e apps de campo",
           column: "temos",
           author: "Equipe",
-          description: "Centralizar links do Hub, repositorios, aplicativos de levantamento e documentos ja desenvolvidos."
+          description: "Centralizar links do Hub, repositorios, aplicativos de levantamento e documentos ja desenvolvidos.",
+          votes: 0
         },
         {
           title: "Briefing ecologico para operadoras",
           column: "livres",
           author: "Equipe",
-          description: "Criar um roteiro curto para guias e dive masters apresentarem macroalgas, costoes e seguranca ambiental antes da atividade."
+          description: "Criar um roteiro curto para guias e dive masters apresentarem macroalgas, costoes e seguranca ambiental antes da atividade.",
+          votes: 0
         },
         {
           title: "Guia visual impermeavel",
           column: "maturacao",
           author: "Equipe",
-          description: "Testar formato de prancheta para uso embarcado e subaquatico, com especies-chave e observacoes simples."
+          description: "Testar formato de prancheta para uso embarcado e subaquatico, com especies-chave e observacoes simples.",
+          votes: 0
         }
       ];
 
@@ -834,6 +923,8 @@
                         <p>${escapeHtml(idea.description)}</p>
                         <div class="idea-meta">
                           <span class="pill">${escapeHtml(idea.author || "Sem autor")}</span>
+                          <span class="pill">${idea.votes || 0} apoios</span>
+                          <button class="button" type="button" data-vote="${ideas.indexOf(idea)}">Apoiar</button>
                           <button class="button" type="button" data-delete="${ideas.indexOf(idea)}">Remover</button>
                         </div>
                       </article>
@@ -853,14 +944,38 @@
             renderBoard();
           });
         });
+
+        board.querySelectorAll("[data-vote]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const ideas = getIdeas();
+            const index = Number(button.dataset.vote);
+            ideas[index].votes = (ideas[index].votes || 0) + 1;
+            saveIdeas(ideas);
+            renderBoard();
+          });
+        });
       }
 
-      tabs.forEach((tab) => {
-        tab.addEventListener("click", () => {
+      function openTab(tabId) {
+        const tab = document.querySelector(`[data-tab="${tabId}"]`);
+        if (!tab) {
+          return;
+        }
           tabs.forEach((item) => item.setAttribute("aria-selected", "false"));
           panels.forEach((panel) => panel.classList.remove("active"));
           tab.setAttribute("aria-selected", "true");
           document.getElementById(tab.dataset.tab).classList.add("active");
+      }
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          openTab(tab.dataset.tab);
+        });
+      });
+
+      document.querySelectorAll("[data-open-tab]").forEach((button) => {
+        button.addEventListener("click", () => {
+          openTab(button.dataset.openTab);
         });
       });
 
@@ -871,7 +986,8 @@
           title: document.getElementById("idea-title").value.trim(),
           column: document.getElementById("idea-column").value,
           author: document.getElementById("idea-author").value.trim(),
-          description: document.getElementById("idea-description").value.trim()
+          description: document.getElementById("idea-description").value.trim(),
+          votes: 0
         });
         saveIdeas(ideas);
         form.reset();
@@ -897,9 +1013,13 @@
 
       function updateNotionLink() {
         const saved = localStorage.getItem("cocriacao_notion_url") || "";
+        const preview = document.getElementById("notion-preview");
         notionUrl.value = saved;
         openNotion.href = saved || "#";
         openNotion.setAttribute("aria-disabled", saved ? "false" : "true");
+        preview.innerHTML = saved
+          ? `<iframe title="Previa do mural no Notion" src="${escapeHtml(saved)}"></iframe>`
+          : '<div class="notion-preview-empty">Cole e salve o link do Notion para testar a abertura do mural.</div>';
       }
 
       saveNotionUrl.addEventListener("click", () => {

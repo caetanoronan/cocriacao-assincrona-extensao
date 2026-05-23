@@ -17,6 +17,7 @@ Organizar a primeira etapa do projeto antes da atualizacao do Hub principal: ali
 A pagina foi pensada para funcionar de forma segura em hospedagem estatica.
 
 - O HTML pode guardar um link do Notion no navegador via `localStorage`.
+- A aba `Notion` permite salvar o link do mural e tentar abrir uma previa incorporada.
 - O mural real deve viver no Notion, com permissoes controladas para a equipe.
 - Tokens da API do Notion nao devem ser colocados no HTML publico.
 - Se futuramente houver necessidade de sincronizacao automatica, ela deve passar por um backend ou automacao segura.

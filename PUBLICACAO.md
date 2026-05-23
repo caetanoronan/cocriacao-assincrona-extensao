@@ -8,6 +8,18 @@ Nome sugerido:
 cocriacao-assincrona-extensao
 ```
 
+Se usar GitHub CLI, autenticar antes:
+
+```bash
+gh auth login -h github.com
+```
+
+Depois criar o repositorio publico:
+
+```bash
+gh repo create caetanoronan/cocriacao-assincrona-extensao --public --source . --remote origin --push
+```
+
 ## 2. Enviar arquivos
 
 Arquivos principais:
@@ -36,6 +48,8 @@ No GitHub:
 4. Abrir o HTML publicado.
 5. Entrar na aba `Notion`.
 6. Colar e salvar o link do mural.
+
+Observacao: se o Notion bloquear incorporacao por iframe, o botao `Abrir mural` continua funcionando normalmente.
 
 ## 5. Decisao antes da versao publica
 

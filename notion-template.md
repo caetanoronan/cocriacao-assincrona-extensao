@@ -23,6 +23,8 @@ Agrupar por: `Categoria`
 | Responsavel | Person/Text | Quem adotou ou esta conduzindo |
 | Frente | Multi-select | Educacao, Turismo, Campo, Dados, Hub, Escolas, Gestao publica |
 | Prioridade | Select | Baixa, Media, Alta |
+| Apoios | Number | Quantidade de membros interessados na ideia |
+| Comentarios-chave | Text | Perguntas, complementos e sinteses importantes |
 | Ciclo | Select/Text | Ex: Ciclo 01, Ciclo 02 |
 | Proximo passo | Text | Acao pequena e concreta |
 | Referencias | URL/Text | Links, imagens, artigos ou materiais |
@@ -68,6 +70,14 @@ Descricao: Consolidar 3 a 5 encaminhamentos apos as primeiras contribuicoes da e
 ## Regra simples de comunicacao
 
 O chat avisa que algo mudou. O Notion guarda a informacao.
+
+## Como cada membro participa
+
+1. Registrar uma ideia, referencia, demanda ou duvida.
+2. Comentar ideias de outras pessoas com perguntas e complementos.
+3. Sinalizar apoio quando uma proposta parecer importante.
+4. Adotar voluntariamente uma ideia quando houver condicao de desenvolver.
+5. Atualizar o proximo passo de forma pequena e objetiva.
 
 ## Rotina sugerida
 
